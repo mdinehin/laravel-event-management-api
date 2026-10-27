@@ -8,6 +8,15 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Attendee extends Model
 {
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var list<string>
+     */
+    protected $fillable = [
+        'user_id',
+    ];
+
+    /**
      * Define Attendee-User relationship.
      *
      * @return BelongsTo<User, $this>
