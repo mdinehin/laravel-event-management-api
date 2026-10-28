@@ -42,6 +42,8 @@ class EventController extends Controller implements HasMiddleware
      */
     public function index()
     {
+        Gate::authorize('viewAny', Event::class);
+
         $query = $this->loadRelationships(
             Event::query()
         );
@@ -56,6 +58,8 @@ class EventController extends Controller implements HasMiddleware
      */
     public function store(Request $request)
     {
+        Gate::authorize('create', Event::class);
+
         $event = Event::create([
             ...$request->validate([
                 'name' => 'required|string|max:255',
@@ -76,6 +80,8 @@ class EventController extends Controller implements HasMiddleware
      */
     public function show(Event $event)
     {
+        Gate::authorize('view', $event);
+
         return new EventResource(
             $this->loadRelationships($event)
         );
@@ -86,7 +92,7 @@ class EventController extends Controller implements HasMiddleware
      */
     public function update(Request $request, Event $event)
     {
-        if (Gate::denies('update-event', $event)) {
+        if (Gate::denies('update', $event)) {
             abort(403, 'You do not have permission to modify this event.');
         }
 
@@ -109,6 +115,10 @@ class EventController extends Controller implements HasMiddleware
      */
     public function destroy(Event $event)
     {
+        if (Gate::denies('delete', $event)) {
+            abort(403, 'You do not have permission to delete this event.');
+        }
+
         $event->delete();
 
         return response(status: 204);
