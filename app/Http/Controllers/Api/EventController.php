@@ -5,10 +5,11 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\EventResource;
 use App\Http\Traits\HasConditionalRelations;
-use Illuminate\Routing\Controllers\HasMiddleware;
-use Illuminate\Routing\Controllers\Middleware;
 use App\Models\Event;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Support\Facades\Gate;
 
 class EventController extends Controller implements HasMiddleware
 {
@@ -29,7 +30,10 @@ class EventController extends Controller implements HasMiddleware
     public static function middleware(): array
     {
         return [
-            new Middleware('auth:sanctum', except: ['index', 'show']),
+            new Middleware('auth:sanctum', except: [
+                'index',
+                'show',
+            ]),
         ];
     }
 
@@ -82,6 +86,10 @@ class EventController extends Controller implements HasMiddleware
      */
     public function update(Request $request, Event $event)
     {
+        if (Gate::denies('update-event', $event)) {
+            abort(403, 'You do not have permission to modify this event.');
+        }
+
         $event->update(
             $request->validate([
                 'name' => 'sometimes|string|max:255',

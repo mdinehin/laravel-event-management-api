@@ -8,8 +8,11 @@ use App\Http\Traits\HasConditionalRelations;
 use App\Models\Attendee;
 use App\Models\Event;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Support\Facades\Gate;
 
-class AttendeeController extends Controller
+class AttendeeController extends Controller implements HasMiddleware
 {
     use HasConditionalRelations;
 
@@ -17,6 +20,22 @@ class AttendeeController extends Controller
     private array $relations = [
         'user',
     ];
+
+    /**
+     * Get the middleware that should be assigned to the controller.
+     *
+     * @return list<Middleware>
+     */
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('auth:sanctum', except: [
+                'index',
+                'show',
+                'update',
+            ]),
+        ];
+    }
 
     /**
      * Display a listing of the resource.
@@ -57,18 +76,14 @@ class AttendeeController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $event, Attendee $attendee)
+    public function destroy(Event $event, Attendee $attendee)
     {
+        if (Gate::denies('delete-attendee', [$event, $attendee])) {
+            abort(403, 'You do not have permission to remove this attendee.');
+        }
+
         $attendee->delete();
 
         return response(status: 204);
