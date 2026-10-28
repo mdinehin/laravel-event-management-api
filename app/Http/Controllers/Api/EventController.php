@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\EventResource;
 use App\Models\Event;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class EventController extends Controller
@@ -14,9 +15,34 @@ class EventController extends Controller
      */
     public function index()
     {
+        $relations = [
+            'user',
+            'attendees',
+            'attendees.user',
+        ];
+
+        $query = Event::query();
+
+        foreach ($relations as $relation) {
+            $query->when($this->shouldIncludeRelation($relation), fn (Builder $q) => $q->with($relation));
+        }
+
         return EventResource::collection(
-            Event::with('user')->paginate()
+            $query->latest()->paginate()
         );
+    }
+
+    protected function shouldIncludeRelation(string $relation): bool
+    {
+        $include = request()->query('include');
+
+        if (! $include) {
+            return false;
+        }
+
+        $relations = array_map('trim', explode(',', $include));
+
+        return in_array($relation, $relations);
     }
 
     /**
