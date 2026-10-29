@@ -1,0 +1,39 @@
+<?php
+
+namespace App\Console\Commands;
+
+use App\Models\Event;
+use Illuminate\Console\Attributes\Description;
+use Illuminate\Console\Attributes\Signature;
+use Illuminate\Console\Command;
+use Illuminate\Support\Str;
+
+#[Signature('events:send-reminders')]
+#[Description('Send reminder emails to event attendees before the event begins')]
+class SendEventReminders extends Command
+{
+    /**
+     * Execute the console command.
+     */
+    public function handle()
+    {
+        $events = Event::with('attendees.user')
+            ->whereBetween('start_time', [now(), now()->addDay()])
+            ->get();
+
+        $eventCount = $events->count();
+        $eventLabel = Str::plural('event', $eventCount);
+
+        $this->info('Found '.$eventCount.' '.$eventLabel.'.');
+
+        $events->each(function ($event) {
+            $event->attendees->each(function ($attendee) {
+                $this->info('Notifying user #'.$attendee->user->id.'...');
+
+                // Notification logic...
+            });
+        });
+
+        $this->info('All event reminders sent successfully.');
+    }
+}
