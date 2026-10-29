@@ -6,7 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\EventResource;
 use App\Http\Traits\HasConditionalRelations;
 use App\Models\Event;
+use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Http\Response;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Gate;
@@ -34,7 +37,7 @@ class EventController extends Controller implements HasMiddleware
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): JsonResource
     {
         Gate::authorize('viewAny', Event::class);
 
@@ -50,7 +53,7 @@ class EventController extends Controller implements HasMiddleware
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request): EventResource
     {
         Gate::authorize('create', Event::class);
 
@@ -72,7 +75,7 @@ class EventController extends Controller implements HasMiddleware
     /**
      * Display the specified resource.
      */
-    public function show(Event $event)
+    public function show(Event $event): EventResource
     {
         Gate::authorize('view', $event);
 
@@ -84,7 +87,7 @@ class EventController extends Controller implements HasMiddleware
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Event $event)
+    public function update(Request $request, Event $event): EventResource
     {
         if (Gate::denies('update', $event)) {
             abort(403, 'You do not have permission to modify this event.');
@@ -107,7 +110,7 @@ class EventController extends Controller implements HasMiddleware
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Event $event)
+    public function destroy(Event $event): ResponseFactory|Response
     {
         if (Gate::denies('delete', $event)) {
             abort(403, 'You do not have permission to delete this event.');

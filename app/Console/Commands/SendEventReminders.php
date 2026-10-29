@@ -16,7 +16,7 @@ class SendEventReminders extends Command
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(): void
     {
         $events = Event::with('attendees.user')
             ->whereBetween('starts_at', [now(), now()->addDay()])

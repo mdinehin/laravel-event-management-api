@@ -2,6 +2,8 @@
 
 namespace App\Http\Traits;
 
+use App\Models\Event;
+use App\Models\Attendee;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -11,13 +13,13 @@ trait HasConditionalRelations
     /**
      * Conditionally load relations onto a Model or Query Builder based on the request.
      *
-     * @param Model|Builder|HasMany $target The model or query builder instance.
+     * @param Builder<Event>|Model|HasMany<Attendee, Event> $target The model or query builder instance.
      * @param list<string>|null $relations The relations to evaluate and load, or null to fall back to the default property.
-     * @return Model|Builder|HasMany The updated model or query builder instance.
+     * @return Builder<Event>|Model|HasMany<Attendee, Event> The updated model or query builder instance.
      */
     public function loadRelationships(Model|Builder|HasMany $target, ?array $relations = null): Model|Builder|HasMany
     {
-        $relations = $relations ?? $this->relations ?? [];
+        $relations = $relations ?? $this->relations;
  
         foreach ($relations as $relation) {
             $target->when(

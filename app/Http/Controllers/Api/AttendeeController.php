@@ -7,7 +7,10 @@ use App\Http\Resources\AttendeeResource;
 use App\Http\Traits\HasConditionalRelations;
 use App\Models\Attendee;
 use App\Models\Event;
+use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Http\Response;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Gate;
@@ -34,7 +37,7 @@ class AttendeeController extends Controller implements HasMiddleware
     /**
      * Display a listing of the resource.
      */
-    public function index(Event $event)
+    public function index(Event $event): JsonResource
     {
         Gate::authorize('viewAny', Attendee::class);
 
@@ -50,7 +53,7 @@ class AttendeeController extends Controller implements HasMiddleware
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, Event $event)
+    public function store(Request $request, Event $event): AttendeeResource
     {
         Gate::authorize('create', Attendee::class);
 
@@ -66,7 +69,7 @@ class AttendeeController extends Controller implements HasMiddleware
     /**
      * Display the specified resource.
      */
-    public function show(Event $event, Attendee $attendee)
+    public function show(Event $event, Attendee $attendee): AttendeeResource
     {
         Gate::authorize('view', $attendee);
 
@@ -78,7 +81,7 @@ class AttendeeController extends Controller implements HasMiddleware
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Event $event, Attendee $attendee)
+    public function destroy(Event $event, Attendee $attendee): ResponseFactory|Response
     {
         if (Gate::denies('delete', $attendee)) {
             abort(403, 'You do not have permission to remove this attendee.');
