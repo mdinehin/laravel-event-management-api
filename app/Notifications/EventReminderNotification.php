@@ -40,7 +40,7 @@ class EventReminderNotification extends Notification implements ShouldQueue
             ->greeting('Reminder!')
             ->line('You have an upcoming event.')
             ->action('View Event', route('events.show', $this->event->id))
-            ->line('The event "'.$this->event->name.'" starts on '.$this->event->start_time.'.');
+            ->line('The event "'.$this->event->name.'" starts at '.$this->event->starts_at.'.');
     }
 
     /**
@@ -53,7 +53,7 @@ class EventReminderNotification extends Notification implements ShouldQueue
         return [
             'event_id' => $this->event->id,
             'event_name' => $this->event->name,
-            'event_start_time' => $this->event->start_time,
+            'event_starts_at' => $this->event->starts_at,
         ];
     }
 }

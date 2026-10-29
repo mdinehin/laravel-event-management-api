@@ -19,7 +19,7 @@ class SendEventReminders extends Command
     public function handle()
     {
         $events = Event::with('attendees.user')
-            ->whereBetween('start_time', [now(), now()->addDay()])
+            ->whereBetween('starts_at', [now(), now()->addDay()])
             ->get();
 
         $eventCount = $events->count();

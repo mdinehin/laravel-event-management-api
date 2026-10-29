@@ -58,8 +58,8 @@ class EventController extends Controller implements HasMiddleware
             ...$request->validate([
                 'name' => 'required|string|max:255',
                 'description' => 'nullable|string',
-                'start_time' => 'required|date',
-                'end_time' => 'required|date|after:start_time',
+                'starts_at' => 'required|date',
+                'ends_at' => 'required|date|after:starts_at',
             ]),
             'user_id' => $request->user()->id,
         ]);
@@ -94,8 +94,8 @@ class EventController extends Controller implements HasMiddleware
             $request->validate([
                 'name' => 'sometimes|string|max:255',
                 'description' => 'nullable|string',
-                'start_time' => 'sometimes|date',
-                'end_time' => 'sometimes|date|after:start_time',
+                'starts_at' => 'sometimes|date',
+                'ends_at' => 'sometimes|date|after:starts_at',
             ])
         );
 
