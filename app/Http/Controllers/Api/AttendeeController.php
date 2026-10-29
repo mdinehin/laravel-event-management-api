@@ -17,9 +17,7 @@ class AttendeeController extends Controller implements HasMiddleware
     use HasConditionalRelations;
 
     /** @var list<string> */
-    private array $relations = [
-        'user',
-    ];
+    private array $relations = ['user'];
 
     /**
      * Get the middleware that should be assigned to the controller.
@@ -29,11 +27,7 @@ class AttendeeController extends Controller implements HasMiddleware
     public static function middleware(): array
     {
         return [
-            new Middleware('auth:sanctum', except: [
-                'index',
-                'show',
-                'update',
-            ]),
+            new Middleware('auth:sanctum', except: ['index', 'show', 'update']),
         ];
     }
 
