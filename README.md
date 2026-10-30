@@ -1,58 +1,69 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Laravel Event Management API
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+![Laravel Version](https://img.shields.io/badge/Laravel-13.x-FF2D20?style=flat-square&logo=laravel&logoColor=white)
+![PHP Version](https://img.shields.io/badge/PHP-8.3%2B-777BB4?style=flat-square&logo=php&logoColor=white)
+![Composer Version](https://img.shields.io/badge/Composer-2.x-885630?style=flat-square&logo=composer&logoColor=white)
+![MySQL Version](https://img.shields.io/badge/MySQL-9.x-4479A1?style=flat-square&logo=mysql&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-blue?style=flat-square)
 
-## About Laravel
+<a href="https://github.com/mdinehin/laravel-event-management-api/actions/workflows/tests.yml"><img src="https://github.com/mdinehin/laravel-event-management-api/workflows/Tests/badge.svg" alt="Tests"></a>
+<a href="https://github.com/mdinehin/laravel-event-management-api/actions/workflows/coding-standards.yml"><img src="https://github.com/mdinehin/laravel-event-management-api/actions/workflows/coding-standards.yml/badge.svg" alt="Coding Standards"></a>
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+A robust RESTful API built with Laravel 13 designed for seamless event organization and participant tracking.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Emphasizing strict type safety, comprehensive static analysis, and secure architectural patterns, this API provides a scalable foundation for modern event-driven applications.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Features
 
-## Learning Laravel
+- Event & Attendee Management: Full CRUD operations for organizing events, updating schedules, and managing participant registrations.
+- Secure API Authentication: Protected endpoints secured via robust Bearer token authentication.
+- Granular Authorization: Fine-grained access control enforced using Laravel Gates and Policies to secure resource ownership and actions.
+- Automated Reminders: Background queue processing and scheduled commands (`events:send-reminders`) to deliver timely email notifications to attendees.
+- Strict Type Safety: Fully typed codebase utilizing strict generics and comprehensive static analysis (PHPStan/Larastan) for high maintainability.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Prerequisites
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+The following software dependencies are required:
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+- PHP 8.3+
+- [Composer](https://getcomposer.org/download/)
+- [MySQL](https://www.mysql.com/downloads/)
 
-## Agentic Development
+## Installation
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+1. Clone the repository `git clone https://github.com/mdinehin/laravel-event-management-api.git`
+2. Install PHP dependencies with `composer install`
+3. Set up a local MySQL database named `laravel_event_management_api`
+4. Copy the `.env.example` file to `.env` and fill in the database credentials
+5. Run database migrations with `php artisan migrate`
+6. Run database seeds with `php artisan db:seed`
+7. Start the local server by running `php artisan serve`
 
-```bash
-composer require laravel/boost --dev
+## API Integration
 
-php artisan boost:install
-```
+The API endpoints are fully documented and structured for seamless client integration. You can explore, test, and interact with all available routes using the provided Postman collection.
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+### API Documentation
 
-## Contributing
+Postman collection: [laravel_event_management_api.postman_collection.json](https://github.com/mdinehin/laravel-event-management-api/blob/main/storage/api-docs/laravel_event_management_api.postman_collection.json)
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### API Reference
 
-## Code of Conduct
+| Resource | Endpoint | Description |
+| --- | --- | --- |
+| Authentication | `/api/login` | Authenticate user credentials and issue a token |
+| Deauthentication | `/api/logout` | Revoke the current Bearer token (log out) |
+| User | `/api/user` | Retrieve the authenticated user profile |
+| Events | `/api/events/*` | CRUD operations for events |
+| Attendees | `/api/events/{event}/attendees/*` | Manage event registrations and participant tracking |
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+For detailed request/response payloads, query parameters, and example bodies, please import the Postman collection.
 
-## Security Vulnerabilities
+## Commands
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+| Command | Description |
+| --- | --- |
+| `php artisan test` | Run the tests |
+| `php artisan migrate:fresh --seed` | Reset the database |
+| `composer types:check` | Perform static code analysis |
+| `composer events:send-reminders` | Dispatch event reminder notifications to attendees |
