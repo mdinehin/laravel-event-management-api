@@ -14,7 +14,7 @@ class AuthController extends Controller
     /**
      * Handle an incoming authentication request.
      *
-     * @param Request $request The incoming HTTP request containing user credentials.
+     * @param  Request  $request  The incoming HTTP request containing user credentials.
      * @return JsonResponse The JSON response containing the authentication token and user data.
      */
     public function login(Request $request): JsonResponse
@@ -44,7 +44,7 @@ class AuthController extends Controller
     /**
      * Log out the authenticated user by revoking their access tokens.
      *
-     * @param Request $request The incoming HTTP request containing the authenticated user.
+     * @param  Request  $request  The incoming HTTP request containing the authenticated user.
      * @return JsonResponse The JSON response confirming successful logout.
      */
     public function logout(Request $request): JsonResponse
