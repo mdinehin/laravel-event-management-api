@@ -681,7 +681,7 @@
           "response": []
         },
         {
-          "name": "Get user by token",
+          "name": "Get authenticated user",
           "protocolProfileBehavior": {
             "disabledSystemHeaders": {
               "accept": true
