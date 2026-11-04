@@ -4,7 +4,7 @@
 ![PHP Version](https://img.shields.io/badge/PHP-8.3%2B-777BB4?style=flat-square&logo=php&logoColor=white)
 ![Composer Version](https://img.shields.io/badge/Composer-2.x-885630?style=flat-square&logo=composer&logoColor=white)
 ![MySQL Version](https://img.shields.io/badge/MySQL-9.x-4479A1?style=flat-square&logo=mysql&logoColor=white)
-![License](https://img.shields.io/badge/License-MIT-blue?style=flat-square)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](LICENSE)
 
 <a href="https://github.com/mdinehin/laravel-event-management-api/actions/workflows/tests.yml"><img src="https://github.com/mdinehin/laravel-event-management-api/workflows/Tests/badge.svg" alt="Tests"></a>
 <a href="https://github.com/mdinehin/laravel-event-management-api/actions/workflows/coding-standards.yml"><img src="https://github.com/mdinehin/laravel-event-management-api/actions/workflows/coding-standards.yml/badge.svg" alt="Coding Standards"></a>
