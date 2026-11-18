@@ -18,8 +18,8 @@ class EventFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->unique()->sentence(3),
-            'description' => fake()->text,
+            'name' => rtrim(fake()->realText(fake()->numberBetween(30, 60)), '.'),
+            'description' => fake()->realText(fake()->numberBetween(80, 160)),
             'starts_at' => fake()->dateTimeBetween('now', '+1 month'),
             'ends_at' => fake()->dateTimeBetween('+1 month', '+2 months'),
         ];
