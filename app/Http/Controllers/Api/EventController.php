@@ -19,7 +19,11 @@ class EventController extends Controller implements HasMiddleware
     use HasConditionalRelations;
 
     /** @var list<string> */
-    private array $relations = ['user', 'attendees', 'attendees.user'];
+    private array $relations = [
+        'user',
+        'attendees',
+        'attendees.user',
+    ];
 
     /**
      * Get the middleware that should be assigned to the controller.
@@ -29,8 +33,15 @@ class EventController extends Controller implements HasMiddleware
     public static function middleware(): array
     {
         return [
-            new Middleware('auth:sanctum', except: ['index', 'show']),
-            new Middleware('throttle:60,1', only: ['store', 'update', 'destroy']),
+            new Middleware('auth:sanctum', except: [
+                'index',
+                'show',
+            ]),
+            new Middleware('throttle:60,1', only: [
+                'store',
+                'update',
+                'destroy',
+            ]),
         ];
     }
 
